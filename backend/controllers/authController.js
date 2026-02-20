@@ -132,6 +132,7 @@ const login = async (req, res) => {
     return res.json({
       success: true,
       message: 'Login successful',
+      token,                                  // sent in body so frontend can use Bearer auth
       user: { username: user.username, role: user.role },
     });
   } catch (err) {

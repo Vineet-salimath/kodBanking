@@ -544,6 +544,17 @@ body{display:flex}
 
 <script>
 const API=window.KB_API||'http://localhost:5000/api';
+// ── Auth helpers ─────────────────────────────────────────────────────────────
+function getToken(){return localStorage.getItem('kbtoken');}
+function authFetch(url,opts={}){
+  const t=getToken();
+  const headers=Object.assign({},opts.headers||{});
+  if(t)headers['Authorization']='Bearer '+t;
+  return fetch(url,Object.assign({},opts,{headers,credentials:'include'}));
+}
+// Guard: redirect to login immediately if no token is stored
+if(!getToken()){location.replace('login.html');}
+// ─────────────────────────────────────────────────────────────────────────────
 const RAPIDAPI_KEY='64d0e30511mshddf7bf026355b07p186714jsnc4c7e90848e4';
 let currentUser=null,allTx=[],filteredTx=[],txPage=0,txFilter='all',balHidden=false,balValue=0;
 const TX_PER_PAGE=10;
@@ -600,14 +611,15 @@ function exportData(){
 }
 function confirmLogout(){if(confirm('Sign out of Kodbank?'))doLogout();}
 async function doLogout(){
-  try{await fetch(API+'/logout',{method:'POST',credentials:'include'});}catch{}
+  try{await authFetch(API+'/logout',{method:'POST'});}catch{}
+  localStorage.removeItem('kbtoken');
   location.href='login.html';
 }
 $('logoutBtn').addEventListener('click',confirmLogout);
 async function bootstrap(){
   try{
-    const r=await fetch(API+'/balance',{credentials:'include'});
-    if(r.status===401){location.href='login.html';return;}
+    const r=await authFetch(API+'/balance');
+    if(r.status===401){localStorage.removeItem('kbtoken');location.href='login.html';return;}
     const b=await r.json();
     if(b.success){
       const{username,balance}=b.data;
@@ -620,11 +632,11 @@ async function bootstrap(){
       $('tfBalDisp').textContent=inr(balValue);$('tpFrom').textContent=username;$('pfBal').textContent=inr(balValue);
     }
     loadTx();
-  }catch{location.href='login.html';}
+  }catch(e){console.error('[bootstrap]',e);localStorage.removeItem('kbtoken');location.href='login.html';}
 }
 function addNotif(icon,text,time,color){NOTIFS.unshift({icon,text,time,color,read:false});renderNotifs();}
 function refreshBal(){
-  fetch(API+'/balance',{credentials:'include'}).then(r=>r.json()).then(b=>{
+  authFetch(API+'/balance').then(r=>r.json()).then(b=>{
     if(b.success){balValue=parseFloat(b.data.balance);if(!balHidden)$('balVal').textContent=inr(balValue);$('tfBalDisp').textContent=inr(balValue);$('pfBal').textContent=inr(balValue);}
   });
 }
@@ -635,7 +647,7 @@ function toggleBal(){
 }
 async function loadTx(){
   try{
-    const r=await fetch(API+'/transactions?limit=100&offset=0',{credentials:'include'});
+    const r=await authFetch(API+'/transactions?limit=100&offset=0');
     const b=await r.json();
     allTx=(b.success&&b.data&&b.data.transactions)?b.data.transactions:mockTx();
   }catch{allTx=mockTx();}
@@ -735,8 +747,8 @@ async function doTransfer(){
   if(amt>balValue){showTfAlert('Insufficient balance.','error');return;}
   $('tfBtn').disabled=true;$('tfBtn').innerHTML='<span class="spinner"></span>Sending...';
   try{
-    const r=await fetch(API+'/transfer',{method:'POST',headers:{'Content-Type':'application/json'},
-      credentials:'include',body:JSON.stringify({recipient:rec,amount:amt,description:desc})});
+    const r=await authFetch(API+'/transfer',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({recipient:rec,amount:amt,description:desc})});
     const b=await r.json();
     if(!r.ok){showTfAlert(b.message||'Transfer failed.','error');}
     else{
@@ -751,7 +763,7 @@ async function doTransfer(){
 }
 async function loadProfile(){
   try{
-    const r=await fetch(API+'/profile',{credentials:'include'});
+    const r=await authFetch(API+'/profile');
     const b=await r.json();
     setProfile(b.success&&b.data?b.data:{});
   }catch{if(currentUser)setProfile({...currentUser,email:'-',phone:'-',role:'customer',created_at:new Date()});}

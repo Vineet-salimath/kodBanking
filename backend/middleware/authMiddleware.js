@@ -8,7 +8,10 @@ const { COOKIE_NAME } = require('../controllers/authController');
  */
 const authenticate = async (req, res, next) => {
   try {
-    const token = req.cookies?.[COOKIE_NAME];
+    // Accept Bearer token from Authorization header (cross-origin) OR HTTP-only cookie
+    const authHeader = req.headers.authorization || '';
+    const token = (authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null)
+                || req.cookies?.[COOKIE_NAME];
 
     if (!token) {
       return res.status(401).json({

@@ -226,7 +226,7 @@ form.addEventListener('submit',async e=>{
       credentials:'include',body:JSON.stringify({username:u,password:p})});
     const b=await res.json();
     if(!res.ok){showAlert(Array.isArray(b.errors)?b.errors.join(' - '):b.message,'error');}
-    else{showAlert('Login successful! Redirecting...','success');setTimeout(()=>location.href='dashboard.html',1200);}
+    else{if(b.token)localStorage.setItem('kbtoken',b.token);showAlert('Login successful! Redirecting...','success');setTimeout(()=>location.href='dashboard.html',1200);}
   }catch{showAlert('Network error — ensure the server is running.','error');}
   finally{setLoad(false);}
 });
