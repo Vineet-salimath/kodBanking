@@ -3,4 +3,4 @@
 // Example: https://kodbank-backend-production.up.railway.app/api
 // Then commit and push — Vercel will auto-redeploy.
 // ─────────────────────────────────────────────────────────────────────────────
-window.KB_API = 'http://localhost:5000/api';
+window.KB_API = 'https://kodbanking-production.up.railway.app/api';
