@@ -330,6 +330,18 @@ body{display:flex}
   .sidebar .nav-item,.sidebar .sb-logo{justify-content:center;padding:12px}
   .transfer-wrap,.market-grid,.grid23,.grid2,.profile-grid,.info-grid,.grid4{grid-template-columns:1fr 1fr}
 }
+/* ── PIN Modal ─────────────────────────────────────────────────────────────── */
+.pin-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9990;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.pin-card{background:var(--card-bg);border-radius:22px;padding:36px 30px;box-shadow:var(--neo-card);width:300px;text-align:center}
+.pin-card-title{font-size:18px;font-weight:800;color:var(--text-primary);margin-bottom:6px}
+.pin-card-sub{font-size:12px;color:var(--text-secondary);margin-bottom:24px}
+.pin-input{width:100%;padding:13px 16px;border-radius:14px;border:none;background:var(--bg-color);box-shadow:var(--neo-inset);font-size:24px;color:var(--text-primary);text-align:center;letter-spacing:10px;outline:none;box-sizing:border-box;font-family:'Inter',sans-serif}
+.pin-actions{display:flex;gap:12px;margin-top:22px}
+.pin-act-btn{flex:1;padding:12px;border-radius:13px;border:none;cursor:pointer;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;transition:all .2s}
+.pin-act-btn.cancel{background:var(--bg-color);box-shadow:var(--neo-card);color:var(--text-secondary)}
+.pin-act-btn.cancel:hover{color:var(--text-primary)}
+.pin-act-btn.confirm{background:var(--accent-gradient);color:#fff;box-shadow:0 4px 16px rgba(0,102,255,0.3)}
+.pin-act-btn.confirm:hover{opacity:.9;transform:scale(1.02)}
 </style>
 </head>
 <body>
@@ -407,15 +419,13 @@ body{display:flex}
         <div class="bh-glow"></div>
         <div class="bh-top">
           <div><div class="bh-label">Available Balance</div><div class="bh-acct" id="bhAcct"></div></div>
-          <div class="bh-live"><span class="bh-live-dot"></span>Live</div>
         </div>
         <div class="bh-amount" id="balVal">Loading...</div>
         <div class="bh-name" id="balName"></div>
         <div class="bh-actions">
           <button class="bh-btn primary" onclick="nav(document.querySelector('[data-page=transfer]'),'transfer')">↗️ Send Money</button>
           <button class="bh-btn secondary" onclick="nav(document.querySelector('[data-page=transactions]'),'transactions')">📋 History</button>
-          <button class="bh-btn ghost" onclick="refreshBal()">↻ Refresh</button>
-          <button class="bh-btn ghost" id="hideBal" onclick="toggleBal()">👁 Hide</button>
+          <button class="bh-btn ghost" id="checkBalBtn" onclick="checkBalance()">🔒 Check Balance</button>
         </div>
       </div>
       <div class="grid4">
@@ -597,7 +607,7 @@ function authFetch(url,opts={}){
 if(!getToken()){location.replace('login.html');}
 // ─────────────────────────────────────────────────────────────────────────────
 const RAPIDAPI_KEY='64d0e30511mshddf7bf026355b07p186714jsnc4c7e90848e4';
-let currentUser=null,allTx=[],filteredTx=[],txPage=0,txFilter='all',balHidden=false,balValue=0;
+let currentUser=null,allTx=[],filteredTx=[],txPage=0,txFilter='all',balHidden=true,balValue=0;
 const TX_PER_PAGE=10;
 // ── Toast notification ────────────────────────────────────────────────────────
 function showToast(msg,type){
@@ -720,7 +730,7 @@ async function bootstrap(){
       currentUser={username,balance};balValue=parseFloat(balance||0);
       const init=username[0].toUpperCase();
       $('sbAvatar').textContent=init;$('sbName').textContent=username;$('greetName').textContent=username;
-      $('balVal').textContent=inr(balValue);$('balName').textContent='@'+username;
+      $('balVal').textContent='₹ ••••••';$('balName').textContent='@'+username;
       const acct='AC'+String(Math.abs(username.charCodeAt(0)*3847+9127)).padStart(10,'0').slice(0,10);
       $('bhAcct').textContent=acct;
       $('tfBalDisp').textContent=inr(balValue);$('tpFrom').textContent=username;$('pfBal').textContent=inr(balValue);
@@ -732,15 +742,30 @@ async function bootstrap(){
   }
 }
 function addNotif(icon,text,time,color){NOTIFS.unshift({icon,text,time,color,read:false});renderNotifs();}
-function refreshBal(){
-  authFetch(API+'/balance').then(r=>r.json()).then(b=>{
-    if(b.success){balValue=parseFloat(b.data.balance);if(!balHidden)$('balVal').textContent=inr(balValue);$('tfBalDisp').textContent=inr(balValue);$('pfBal').textContent=inr(balValue);}
-  });
+function checkBalance(){
+  if(!balHidden){hideBalance();return;}
+  $('pinModal').style.display='flex';
+  $('pinInput').value='';
+  setTimeout(()=>$('pinInput').focus(),50);
 }
-function toggleBal(){
-  balHidden=!balHidden;
-  $('balVal').textContent=balHidden?'Rs. xxxxxx':inr(balValue);
-  $('hideBal').textContent=balHidden?'Show':'Hide';
+function closePinModal(){
+  $('pinModal').style.display='none';
+}
+function submitPin(){
+  const pin=$('pinInput').value.trim();
+  if(!pin){showToast('Please enter your PIN.','error');return;}
+  closePinModal();
+  balHidden=false;
+  $('balVal').textContent=inr(balValue);
+  const btn=$('checkBalBtn');
+  btn.textContent='👁 Hide Balance';
+  showToast('Balance revealed.','success');
+}
+function hideBalance(){
+  balHidden=true;
+  $('balVal').textContent='₹ ••••••';
+  const btn=$('checkBalBtn');
+  btn.textContent='🔒 Check Balance';
 }
 async function loadTx(){
   try{
@@ -937,5 +962,18 @@ function renderTickers(list){
 }
 bootstrap();
 </script>
+<!-- PIN Modal -->
+<div id="pinModal" class="pin-overlay" style="display:none">
+  <div class="pin-card">
+    <div class="pin-card-title">🔒 Enter PIN</div>
+    <div class="pin-card-sub">Enter your account PIN to view balance</div>
+    <input id="pinInput" type="password" class="pin-input" placeholder="••••" maxlength="8"
+      onkeydown="if(event.key==='Enter')submitPin()">
+    <div class="pin-actions">
+      <button class="pin-act-btn cancel" onclick="closePinModal()">Cancel</button>
+      <button class="pin-act-btn confirm" onclick="submitPin()">Confirm</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
