@@ -632,7 +632,10 @@ async function bootstrap(){
       $('tfBalDisp').textContent=inr(balValue);$('tpFrom').textContent=username;$('pfBal').textContent=inr(balValue);
     }
     loadTx();
-  }catch(e){console.error('[bootstrap]',e);localStorage.removeItem('kbtoken');location.href='login.html';}
+  }catch(e){
+    // Network/CORS errors should NOT log the user out — only a real 401 should.
+    console.error('[bootstrap]',e);
+  }
 }
 function addNotif(icon,text,time,color){NOTIFS.unshift({icon,text,time,color,read:false});renderNotifs();}
 function refreshBal(){
