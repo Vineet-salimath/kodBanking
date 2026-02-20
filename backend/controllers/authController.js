@@ -118,11 +118,13 @@ const login = async (req, res) => {
     );
 
     // Set HTTP-only cookie
+    // sameSite:'None' is required for cross-origin requests (Vercel frontend → Railway backend).
+    // 'Strict' would block the cookie on all cross-site fetches, causing instant 401 on dashboard.
     const isProd = process.env.NODE_ENV === 'production';
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure:   isProd,
-      sameSite: 'Strict',
+      secure:   isProd,          // must be true when sameSite:'None'
+      sameSite: isProd ? 'None' : 'Lax',
       maxAge:   expirySeconds * 1000,
       path:     '/',
     });
