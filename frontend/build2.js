@@ -123,6 +123,7 @@ const register = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kodbank — Create Account</title>
+<script src="env.js"></script>
 <style>
 ${SHARED_CSS}
 html,body{height:100%;overflow:hidden}
@@ -279,7 +280,7 @@ body{display:flex}
 </div>
 
 <script>
-const API='http://localhost:5000/api';
+const API=window.KB_API||'http://localhost:5000/api';
 const form=document.getElementById('regForm');
 const alertEl=document.getElementById('alert');
 const submitBtn=document.getElementById('submitBtn');
@@ -333,6 +334,7 @@ const login = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kodbank — Sign In</title>
+<script src="env.js"></script>
 <style>
 ${SHARED_CSS}
 html,body{height:100%;overflow:hidden}
@@ -430,7 +432,7 @@ body{display:flex}
   </div>
 </div>
 <script>
-const API='http://localhost:5000/api';
+const API=window.KB_API||'http://localhost:5000/api';
 const form=document.getElementById('loginForm');
 const alertEl=document.getElementById('alert');
 const submitBtn=document.getElementById('submitBtn');
@@ -467,6 +469,7 @@ const dashboard = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kodbank — Dashboard</title>
+<script src="env.js"></script>
 <style>
 ${SHARED_CSS}
 html,body{height:100%;overflow:hidden}
@@ -902,7 +905,7 @@ body{display:flex}
 </div>
 
 <script>
-const API='http://localhost:5000/api';
+const API=window.KB_API||'http://localhost:5000/api';
 const RAPIDAPI_KEY='64d0e30511mshddf7bf026355b07p186714jsnc4c7e90848e4';
 let currentUser=null,allTx=[],filteredTx=[],txPage=0,txFilter='all',balHidden=false,balValue=0;
 const TX_PER_PAGE=10;
