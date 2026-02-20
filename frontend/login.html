@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kodbank — Sign In</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg1:#050d2e;--bg2:#0a1854;--bg3:#0f2070;
+  --glass:rgba(255,255,255,0.07);--glass2:rgba(255,255,255,0.12);
+  --glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);
+  --green:#00e5a0;--green2:#00c97a;--green-g:linear-gradient(135deg,#00e5a0,#00c97a);
+  --violet:#7c3aed;--violet2:#9d5cf0;--violet-g:linear-gradient(135deg,#7c3aed,#9d5cf0);
+  --blue:#3b82f6;--blue2:#60a5fa;
+  --text:#e8eeff;--sub:rgba(232,238,255,0.6);--muted:rgba(232,238,255,0.4);
+  --red:#ff5c7a;--yellow:#fbbf24;
+  --r:18px;--r2:14px;--r3:10px;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg1);color:var(--text);min-height:100vh;
+  background-image:
+    radial-gradient(ellipse at 15% 20%,rgba(124,58,237,0.35) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 70%,rgba(0,229,160,0.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(59,130,246,0.15) 0%,transparent 60%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 50%,var(--bg3) 100%)}
+
+/* Glass panel */
+.glass{background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:var(--r)}
+.glass2{background:var(--glass2);border:1px solid var(--glass-border2);
+  backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-radius:var(--r)}
+.glass-sm{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);border-radius:var(--r2)}
+
+/* Buttons */
+.btn-green{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border:none;border-radius:var(--r2);cursor:pointer;
+  background:var(--green-g);color:#051a10;font-weight:800;font-size:14px;
+  box-shadow:0 0 32px rgba(0,229,160,0.45),0 4px 16px rgba(0,0,0,0.3);
+  transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
+.btn-green:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 0 48px rgba(0,229,160,0.6),0 8px 24px rgba(0,0,0,0.3)}
+.btn-green:active:not(:disabled){transform:scale(.97)}
+.btn-green:disabled{opacity:.5;cursor:not-allowed}
+
+.btn-violet{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border:none;border-radius:var(--r2);cursor:pointer;
+  background:var(--violet-g);color:#fff;font-weight:800;font-size:14px;
+  box-shadow:0 0 32px rgba(124,58,237,0.45),0 4px 16px rgba(0,0,0,0.3);
+  transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
+.btn-violet:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 0 48px rgba(124,58,237,0.6)}
+.btn-violet:active:not(:disabled){transform:scale(.97)}
+.btn-violet:disabled{opacity:.5;cursor:not-allowed}
+
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border:1px solid var(--glass-border2);border-radius:var(--r2);
+  background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:13px;cursor:pointer;
+  transition:all .2s;font-family:'Inter',sans-serif}
+.btn-ghost:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.35)}
+
+/* Inputs */
+.field{position:relative;margin-bottom:18px}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.15);border-radius:var(--r2);
+  padding:20px 16px 8px;color:var(--text);font-size:14px;
+  font-family:'Inter',sans-serif;outline:none;
+  transition:all .25s;-webkit-appearance:none}
+.field select option{background:#0a1854}
+.field label{position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  font-size:14px;color:var(--muted);pointer-events:none;transition:all .2s}
+.field input:focus,.field input:not(:placeholder-shown),
+.field select:focus,.field select:valid{
+  border-color:var(--green);background:rgba(0,229,160,0.06);
+  box-shadow:0 0 0 3px rgba(0,229,160,0.15),0 0 20px rgba(0,229,160,0.1)}
+.field input:focus~label,.field input:not(:placeholder-shown)~label,
+.field select:focus~label,.field select:valid~label{
+  top:11px;transform:translateY(0) scale(.75);color:var(--green)}
+.err{font-size:11px;color:var(--red);margin-top:4px;display:none}
+.err.show{display:block}
+
+/* Alert */
+.alert{padding:13px 16px;border-radius:var(--r3);font-size:13px;
+  margin-bottom:18px;display:none;align-items:center;gap:10px;font-weight:500}
+.alert.show{display:flex}
+.alert.error{background:rgba(255,92,122,0.12);border:1px solid rgba(255,92,122,0.3);color:var(--red)}
+.alert.success{background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.3);color:var(--green)}
+
+/* Spinner */
+.spinner{display:inline-block;width:15px;height:15px;
+  border:2px solid rgba(255,255,255,0.2);border-top-color:var(--green);
+  border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* Grid dots background */
+.dot-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(255,255,255,0.07) 1px,transparent 1px);
+  background-size:36px 36px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(124,58,237,0.4);border-radius:99px}
+
+html,body{height:100%;overflow:hidden}
+body{display:flex}
+.left{width:46%;height:100vh;flex-shrink:0;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 48px}
+.left-inner{position:relative;z-index:2;text-align:center;width:100%}
+.brand{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px}
+.brand-icon{width:54px;height:54px;border-radius:16px;background:var(--green-g);
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px;color:#051a10;
+  box-shadow:0 0 32px rgba(0,229,160,0.5)}
+.brand-name{font-size:27px;font-weight:800}
+.hero-h{font-size:38px;font-weight:900;line-height:1.15;letter-spacing:-.8px;margin-bottom:14px}
+.hero-h em{font-style:normal;background:linear-gradient(135deg,#00e5a0,#7c3aed);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:14px;color:var(--sub);line-height:1.75;max-width:310px;margin:0 auto 40px}
+
+.balance-card{
+  width:100%;max-width:300px;margin:0 auto;
+  padding:22px 24px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(124,58,237,0.25),rgba(0,229,160,0.12));
+  border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(24px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.35),0 0 0 1px rgba(255,255,255,0.08) inset;
+  animation:float 4s ease-in-out infinite
+}
+.bc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.bc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.bc-ico{font-size:20px}
+.bc-amount{font-size:32px;font-weight:900;letter-spacing:-.5px;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bc-sub{font-size:12px;color:var(--green);margin-top:4px;font-weight:600}
+.bc-wave{margin-top:16px;overflow:hidden;height:40px;position:relative}
+.bc-wave svg{position:absolute;bottom:0;width:100%}
+
+.right{flex:1;height:100vh;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:40px 56px}
+.form-box{width:100%;max-width:400px;animation:fadeUp .5s ease both}
+.fh{margin-bottom:28px}
+.fh h2{font-size:26px;font-weight:800;margin-bottom:6px}
+.fh p{font-size:13px;color:var(--sub)}
+.fh a{color:var(--green);text-decoration:none;font-weight:700}
+.fh a:hover{text-decoration:underline}
+.pw-row{display:flex;justify-content:flex-end;margin-top:-12px;margin-bottom:18px}
+.pw-row a{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
+.pw-row a:hover{color:var(--green)}
+@media(max-width:860px){.left{display:none}.right{padding:28px 20px}html,body{height:auto;overflow:auto}}
+</style>
+</head>
+<body>
+<div class="dot-grid"></div>
+<div class="left">
+  <div class="left-inner">
+    <div class="brand"><div class="brand-icon">K</div><span class="brand-name">Kodbank</span></div>
+    <h1 class="hero-h">Welcome<br/><em>back.</em></h1>
+    <p class="hero-sub">Your money is safe, growing, and always accessible.</p>
+    <div class="balance-card">
+      <div class="bc-top">
+        <div><div class="bc-lbl">Account Balance</div></div>
+        <div class="bc-ico">💳</div>
+      </div>
+      <div class="bc-amount">₹10,000.00</div>
+      <div class="bc-sub">↑ +3.2% this month</div>
+      <div class="bc-wave">
+        <svg viewBox="0 0 300 40" preserveAspectRatio="none" fill="none">
+          <path d="M0 25 C50 5 100 40 150 20 C200 0 250 35 300 15 L300 40 L0 40 Z" fill="rgba(0,229,160,0.15)"/>
+          <path d="M0 30 C60 12 110 38 170 22 C220 8 270 32 300 18 L300 40 L0 40 Z" fill="rgba(124,58,237,0.12)"/>
+          <path stroke="#00e5a0" stroke-width="2" d="M0 25 C50 5 100 40 150 20 C200 0 250 35 300 15" fill="none"/>
+          <path stroke="#7c3aed" stroke-width="1.5" d="M0 30 C60 12 110 38 170 22 C220 8 270 32 300 18" fill="none" stroke-dasharray="4 3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="right">
+  <div class="form-box">
+    <div class="fh">
+      <h2>Sign in to Kodbank</h2>
+      <p>New here? <a href="register.html">Create a free account</a></p>
+    </div>
+    <div id="alert" class="alert"></div>
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <input type="text" id="username" placeholder=" " autocomplete="username"/>
+        <label>Username</label>
+        <div class="err" id="err-username"></div>
+      </div>
+      <div class="field">
+        <input type="password" id="password" placeholder=" " autocomplete="current-password"/>
+        <label>Password</label>
+        <div class="err" id="err-password"></div>
+      </div>
+      <div class="pw-row"><a href="#">Forgot password?</a></div>
+      <button type="submit" class="btn-green" id="submitBtn" style="width:100%;padding:15px">Sign In</button>
+    </form>
+  </div>
+</div>
+<script>
+const API='http://localhost:5000/api';
+const form=document.getElementById('loginForm');
+const alertEl=document.getElementById('alert');
+const submitBtn=document.getElementById('submitBtn');
+function showAlert(m,t){alertEl.innerHTML='<span>'+(t==='success'?'ok':'x')+'</span> '+m;alertEl.className='alert '+t+' show';}
+function se(id,m){const e=document.getElementById('err-'+id);if(e){e.textContent=m;e.classList[m?'add':'remove']('show');}}
+function cl(){['username','password'].forEach(id=>se(id,''));alertEl.className='alert';}
+function setLoad(on){submitBtn.disabled=on;submitBtn.innerHTML=on?'<span class="spinner"></span>Signing in...':'Sign In';}
+form.addEventListener('submit',async e=>{
+  e.preventDefault();cl();
+  const u=document.getElementById('username').value.trim();
+  const p=document.getElementById('password').value;
+  let ok=true;
+  if(!u){se('username','Username is required');ok=false;}
+  if(!p){se('password','Password is required');ok=false;}
+  if(!ok)return;setLoad(true);
+  try{
+    const res=await fetch(API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},
+      credentials:'include',body:JSON.stringify({username:u,password:p})});
+    const b=await res.json();
+    if(!res.ok){showAlert(Array.isArray(b.errors)?b.errors.join(' - '):b.message,'error');}
+    else{showAlert('Login successful! Redirecting...','success');setTimeout(()=>location.href='dashboard.html',1200);}
+  }catch{showAlert('Network error — ensure the server is running.','error');}
+  finally{setLoad(false);}
+});
+</script>
+</body>
+</html>

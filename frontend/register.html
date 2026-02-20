@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kodbank — Create Account</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg1:#050d2e;--bg2:#0a1854;--bg3:#0f2070;
+  --glass:rgba(255,255,255,0.07);--glass2:rgba(255,255,255,0.12);
+  --glass-border:rgba(255,255,255,0.18);--glass-border2:rgba(255,255,255,0.28);
+  --green:#00e5a0;--green2:#00c97a;--green-g:linear-gradient(135deg,#00e5a0,#00c97a);
+  --violet:#7c3aed;--violet2:#9d5cf0;--violet-g:linear-gradient(135deg,#7c3aed,#9d5cf0);
+  --blue:#3b82f6;--blue2:#60a5fa;
+  --text:#e8eeff;--sub:rgba(232,238,255,0.6);--muted:rgba(232,238,255,0.4);
+  --red:#ff5c7a;--yellow:#fbbf24;
+  --r:18px;--r2:14px;--r3:10px;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg1);color:var(--text);min-height:100vh;
+  background-image:
+    radial-gradient(ellipse at 15% 20%,rgba(124,58,237,0.35) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 70%,rgba(0,229,160,0.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(59,130,246,0.15) 0%,transparent 60%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 50%,var(--bg3) 100%)}
+
+/* Glass panel */
+.glass{background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:var(--r)}
+.glass2{background:var(--glass2);border:1px solid var(--glass-border2);
+  backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-radius:var(--r)}
+.glass-sm{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);border-radius:var(--r2)}
+
+/* Buttons */
+.btn-green{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border:none;border-radius:var(--r2);cursor:pointer;
+  background:var(--green-g);color:#051a10;font-weight:800;font-size:14px;
+  box-shadow:0 0 32px rgba(0,229,160,0.45),0 4px 16px rgba(0,0,0,0.3);
+  transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
+.btn-green:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 0 48px rgba(0,229,160,0.6),0 8px 24px rgba(0,0,0,0.3)}
+.btn-green:active:not(:disabled){transform:scale(.97)}
+.btn-green:disabled{opacity:.5;cursor:not-allowed}
+
+.btn-violet{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border:none;border-radius:var(--r2);cursor:pointer;
+  background:var(--violet-g);color:#fff;font-weight:800;font-size:14px;
+  box-shadow:0 0 32px rgba(124,58,237,0.45),0 4px 16px rgba(0,0,0,0.3);
+  transition:transform .2s,box-shadow .2s;font-family:'Inter',sans-serif}
+.btn-violet:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 0 48px rgba(124,58,237,0.6)}
+.btn-violet:active:not(:disabled){transform:scale(.97)}
+.btn-violet:disabled{opacity:.5;cursor:not-allowed}
+
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border:1px solid var(--glass-border2);border-radius:var(--r2);
+  background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:13px;cursor:pointer;
+  transition:all .2s;font-family:'Inter',sans-serif}
+.btn-ghost:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.35)}
+
+/* Inputs */
+.field{position:relative;margin-bottom:18px}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.15);border-radius:var(--r2);
+  padding:20px 16px 8px;color:var(--text);font-size:14px;
+  font-family:'Inter',sans-serif;outline:none;
+  transition:all .25s;-webkit-appearance:none}
+.field select option{background:#0a1854}
+.field label{position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  font-size:14px;color:var(--muted);pointer-events:none;transition:all .2s}
+.field input:focus,.field input:not(:placeholder-shown),
+.field select:focus,.field select:valid{
+  border-color:var(--green);background:rgba(0,229,160,0.06);
+  box-shadow:0 0 0 3px rgba(0,229,160,0.15),0 0 20px rgba(0,229,160,0.1)}
+.field input:focus~label,.field input:not(:placeholder-shown)~label,
+.field select:focus~label,.field select:valid~label{
+  top:11px;transform:translateY(0) scale(.75);color:var(--green)}
+.err{font-size:11px;color:var(--red);margin-top:4px;display:none}
+.err.show{display:block}
+
+/* Alert */
+.alert{padding:13px 16px;border-radius:var(--r3);font-size:13px;
+  margin-bottom:18px;display:none;align-items:center;gap:10px;font-weight:500}
+.alert.show{display:flex}
+.alert.error{background:rgba(255,92,122,0.12);border:1px solid rgba(255,92,122,0.3);color:var(--red)}
+.alert.success{background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.3);color:var(--green)}
+
+/* Spinner */
+.spinner{display:inline-block;width:15px;height:15px;
+  border:2px solid rgba(255,255,255,0.2);border-top-color:var(--green);
+  border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* Grid dots background */
+.dot-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(255,255,255,0.07) 1px,transparent 1px);
+  background-size:36px 36px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(124,58,237,0.4);border-radius:99px}
+
+html,body{height:100%;overflow:hidden}
+body{display:flex}
+
+/* ── LEFT BRAND PANEL ── */
+.left{
+  width:46%;height:100vh;flex-shrink:0;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:60px 56px;
+}
+.left-inner{position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:52px}
+.brand-icon{
+  width:52px;height:52px;border-radius:16px;
+  background:var(--green-g);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:24px;color:#051a10;
+  box-shadow:0 0 32px rgba(0,229,160,0.5)
+}
+.brand-name{font-size:26px;font-weight:800;color:var(--text)}
+.hero-h{font-size:42px;font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:16px}
+.hero-h em{font-style:normal;
+  background:linear-gradient(135deg,#00e5a0,#7c3aed,#3b82f6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text}
+.hero-sub{font-size:15px;color:var(--sub);line-height:1.75;max-width:380px;margin-bottom:44px}
+.feats{display:flex;flex-direction:column;gap:14px}
+.feat{display:flex;align-items:center;gap:14px}
+.feat-ic{width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14)}
+.feat-text strong{display:block;font-size:13px;font-weight:700;color:var(--text)}
+.feat-text span{font-size:12px;color:var(--muted)}
+
+/* floating glass card */
+.demo-card{
+  position:absolute;bottom:44px;right:36px;width:240px;
+  padding:20px;z-index:3;animation:float 4s ease-in-out infinite
+}
+.dc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.dc-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.dc-badge{font-size:10px;font-weight:700;color:var(--green);
+  background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.2);
+  padding:3px 8px;border-radius:99px;display:flex;align-items:center;gap:4px}
+.dc-dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+.dc-amount{font-size:28px;font-weight:900;margin-bottom:4px}
+.dc-sub{font-size:11px;color:var(--sub)}
+.dc-sparkline{display:flex;align-items:flex-end;gap:3px;height:36px;margin-top:12px}
+.dc-bar{border-radius:3px 3px 0 0;flex:1}
+
+/* ── RIGHT FORM PANEL ── */
+.right{flex:1;height:100vh;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:40px 48px}
+.form-box{width:100%;max-width:460px;animation:fadeUp .5s ease both}
+.fh{margin-bottom:28px}
+.fh h2{font-size:26px;font-weight:800;margin-bottom:6px}
+.fh p{font-size:13px;color:var(--sub)}
+.fh a{color:var(--green);text-decoration:none;font-weight:700}
+.fh a:hover{text-decoration:underline}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pws{display:flex;gap:4px;margin-top:5px}
+.pwb{height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s}
+.pwl{font-size:10px;color:var(--muted);margin-top:3px}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;margin:20px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.1)}
+.policy{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.7}
+.policy a{color:var(--violet2);text-decoration:none}
+@media(max-width:860px){.left{display:none}.right{padding:28px 20px}html,body{height:auto;overflow:auto}}
+</style>
+</head>
+<body>
+<div class="dot-grid"></div>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-inner">
+    <div class="brand">
+      <div class="brand-icon">K</div>
+      <span class="brand-name">Kodbank</span>
+    </div>
+    <h1 class="hero-h">Banking that<br/><em>feels different.</em></h1>
+    <p class="hero-sub">Join thousands of users who trust Kodbank for secure, instant, and modern digital banking.</p>
+    <div class="feats">
+      <div class="feat"><div class="feat-ic">🔒</div><div class="feat-text"><strong>Military-grade Security</strong><span>256-bit encryption, JWT, SSL</span></div></div>
+      <div class="feat"><div class="feat-ic">⚡</div><div class="feat-text"><strong>Instant Transfers</strong><span>Send money in under a second</span></div></div>
+      <div class="feat"><div class="feat-ic">📊</div><div class="feat-text"><strong>Live Market Insights</strong><span>Real-time financial data & news</span></div></div>
+      <div class="feat"><div class="feat-ic">💳</div><div class="feat-text"><strong>Virtual Debit Card</strong><span>Secure virtual card included</span></div></div>
+    </div>
+  </div>
+  <!-- floating glass card decoration -->
+  <div class="demo-card glass">
+    <div class="dc-top">
+      <div><div class="dc-label">Net Balance</div></div>
+      <div class="dc-badge"><span class="dc-dot"></span>Live</div>
+    </div>
+    <div class="dc-amount">₹10,000</div>
+    <div class="dc-sub">+3.2% this month</div>
+    <div class="dc-sparkline">
+      <div class="dc-bar" style="height:40%;background:rgba(0,229,160,0.35)"></div>
+      <div class="dc-bar" style="height:65%;background:rgba(0,229,160,0.5)"></div>
+      <div class="dc-bar" style="height:45%;background:rgba(0,229,160,0.35)"></div>
+      <div class="dc-bar" style="height:80%;background:rgba(0,229,160,0.65)"></div>
+      <div class="dc-bar" style="height:60%;background:rgba(0,229,160,0.5)"></div>
+      <div class="dc-bar" style="height:90%;background:var(--green)"></div>
+      <div class="dc-bar" style="height:72%;background:rgba(0,229,160,0.6)"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="form-box">
+    <div class="fh">
+      <h2>Create your account</h2>
+      <p>Already have an account? <a href="login.html">Sign in</a></p>
+    </div>
+    <div id="alert" class="alert"></div>
+    <form id="regForm" novalidate>
+      <div class="row2">
+        <div class="field">
+          <input type="text" id="username" placeholder=" " autocomplete="username"/>
+          <label>Username</label>
+          <div class="err" id="err-username"></div>
+        </div>
+        <div class="field">
+          <input type="tel" id="phone" placeholder=" " autocomplete="tel"/>
+          <label>Phone</label>
+          <div class="err" id="err-phone"></div>
+        </div>
+      </div>
+      <div class="field">
+        <input type="email" id="email" placeholder=" " autocomplete="email"/>
+        <label>Email address</label>
+        <div class="err" id="err-email"></div>
+      </div>
+      <div class="field">
+        <input type="password" id="password" placeholder=" " autocomplete="new-password"/>
+        <label>Password</label>
+        <div class="pws" id="pws">
+          <div class="pwb" id="pb1"></div><div class="pwb" id="pb2"></div>
+          <div class="pwb" id="pb3"></div><div class="pwb" id="pb4"></div>
+        </div>
+        <div class="pwl" id="pwl"></div>
+        <div class="err" id="err-password"></div>
+      </div>
+      <div class="field">
+        <input type="password" id="cpw" placeholder=" " autocomplete="new-password"/>
+        <label>Confirm password</label>
+        <div class="err" id="err-cpw"></div>
+      </div>
+      <button type="submit" class="btn-green" id="submitBtn" style="width:100%;margin-top:6px;padding:15px">Create Account</button>
+    </form>
+    <p class="policy">By continuing you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+  </div>
+</div>
+
+<script>
+const API='http://localhost:5000/api';
+const form=document.getElementById('regForm');
+const alertEl=document.getElementById('alert');
+const submitBtn=document.getElementById('submitBtn');
+
+document.getElementById('password').addEventListener('input',function(){
+  const v=this.value;let s=0;
+  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  const c=['','#ff5c7a','#fbbf24','#00e5a0','#7c3aed'];
+  const lb=['','Weak','Fair','Good','Strong'];
+  [1,2,3,4].forEach(i=>{document.getElementById('pb'+i).style.background=i<=s?c[s]:'rgba(255,255,255,.1)';});
+  const pl=document.getElementById('pwl');pl.textContent=s>0?lb[s]:'';pl.style.color=c[s];
+});
+function se(id,msg){const e=document.getElementById('err-'+id);e.textContent=msg;e.classList[msg?'add':'remove']('show');}
+function cl(){['username','email','phone','password','cpw'].forEach(id=>se(id,''));alertEl.className='alert';}
+function validate(d){let ok=true;
+  if(!d.u||!/^[a-zA-Z0-9_]{3,80}$/.test(d.u)){se('username','3-80 chars: letters, numbers, underscores');ok=false;}
+  if(!d.e||!/^[^s@]+@[^s@]+.[^s@]+$/.test(d.e)){se('email','Enter a valid email');ok=false;}
+  if(!d.ph||!/^[0-9+-s]{7,25}$/.test(d.ph)){se('phone','Enter a valid phone');ok=false;}
+  if(!d.pw||d.pw.length<8||!/[A-Z]/.test(d.pw)||!/[a-z]/.test(d.pw)||!/d/.test(d.pw)){se('password','Min 8 chars with upper, lower & digit');ok=false;}
+  if(d.pw!==d.cpw){se('cpw','Passwords do not match');ok=false;}
+  return ok;
+}
+function setLoad(on){submitBtn.disabled=on;submitBtn.innerHTML=on?'<span class="spinner"></span>Creating...':'Create Account';}
+function showAlert(m,t){alertEl.innerHTML='<span>'+(t==='success'?'checkmark':'x')+'</span> '+m;alertEl.className='alert '+t+' show';}
+form.addEventListener('submit',async e=>{
+  e.preventDefault();cl();
+  const d={u:document.getElementById('username').value.trim(),
+    e:document.getElementById('email').value.trim(),
+    ph:document.getElementById('phone').value.trim(),
+    pw:document.getElementById('password').value,
+    cpw:document.getElementById('cpw').value};
+  if(!validate(d))return;setLoad(true);
+  try{
+    const res=await fetch(API+'/register',{method:'POST',headers:{'Content-Type':'application/json'},
+      credentials:'include',body:JSON.stringify({username:d.u,email:d.e,phone:d.ph,password:d.pw,role:'customer'})});
+    const b=await res.json();
+    if(!res.ok)showAlert(Array.isArray(b.errors)?b.errors.join(' - '):b.message,'error');
+    else{showAlert(b.message+' Redirecting...','success');setTimeout(()=>location.href='login.html',1800);}
+  }catch{showAlert('Network error — ensure the server is running.','error');}
+  finally{setLoad(false);}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+node_modules/
+.env
+config/ca.pem
+*.log
+.DS_Store
