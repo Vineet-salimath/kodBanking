@@ -156,24 +156,6 @@ body{display:flex}
 .feat-text strong{display:block;font-size:13px;font-weight:700;color:#fff}
 .feat-text span{font-size:12px;color:rgba(255,255,255,0.7)}
 
-/* floating glass card */
-.demo-card{
-  position:absolute;bottom:44px;right:36px;width:240px;
-  padding:20px;z-index:3;animation:float 4s ease-in-out infinite;
-  background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);
-  border-radius:20px;box-shadow:0 16px 40px rgba(0,0,0,0.15)
-}
-.dc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
-.dc-label{font-size:10px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.08em}
-.dc-badge{font-size:10px;font-weight:700;color:#fff;
-  background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);
-  padding:3px 8px;border-radius:99px;display:flex;align-items:center;gap:4px}
-.dc-dot{width:5px;height:5px;border-radius:50%;background:#fff}
-.dc-amount{font-size:28px;font-weight:900;margin-bottom:4px;color:#fff}
-.dc-sub{font-size:11px;color:rgba(255,255,255,0.75)}
-.dc-sparkline{display:flex;align-items:flex-end;gap:3px;height:36px;margin-top:12px}
-.dc-bar{border-radius:3px 3px 0 0;flex:1;background:rgba(255,255,255,0.4)}
-
 /* ── RIGHT FORM PANEL ── */
 .right{flex:1;height:100vh;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:40px 48px}
 .form-box{width:100%;max-width:460px;animation:fadeUp .5s ease both}
@@ -211,24 +193,6 @@ body{display:flex}
       <div class="feat"><div class="feat-ic">⚡</div><div class="feat-text"><strong>Instant Transfers</strong><span>Send money in under a second</span></div></div>
       <div class="feat"><div class="feat-ic">📊</div><div class="feat-text"><strong>Live Market Insights</strong><span>Real-time financial data & news</span></div></div>
       <div class="feat"><div class="feat-ic">💳</div><div class="feat-text"><strong>Virtual Debit Card</strong><span>Secure virtual card included</span></div></div>
-    </div>
-  </div>
-  <!-- floating glass card decoration -->
-  <div class="demo-card glass">
-    <div class="dc-top">
-      <div><div class="dc-label">Net Balance</div></div>
-      <div class="dc-badge"><span class="dc-dot"></span>Live</div>
-    </div>
-    <div class="dc-amount">₹10,000</div>
-    <div class="dc-sub">+3.2% this month</div>
-    <div class="dc-sparkline">
-      <div class="dc-bar" style="height:40%;background:rgba(0,229,160,0.35)"></div>
-      <div class="dc-bar" style="height:65%;background:rgba(0,229,160,0.5)"></div>
-      <div class="dc-bar" style="height:45%;background:rgba(0,229,160,0.35)"></div>
-      <div class="dc-bar" style="height:80%;background:rgba(0,229,160,0.65)"></div>
-      <div class="dc-bar" style="height:60%;background:rgba(0,229,160,0.5)"></div>
-      <div class="dc-bar" style="height:90%;background:var(--green)"></div>
-      <div class="dc-bar" style="height:72%;background:rgba(0,229,160,0.6)"></div>
     </div>
   </div>
 </div>
