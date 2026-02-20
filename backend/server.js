@@ -63,6 +63,23 @@ app.use((err, req, res, next) => {
 
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 (async () => {
+  // ── Validate required env vars before touching the DB ──
+  const REQUIRED = ['DB_HOST','DB_PORT','DB_USER','DB_PASSWORD','DB_NAME','JWT_SECRET'];
+  const missing  = REQUIRED.filter(k => !process.env[k]);
+  if (missing.length) {
+    console.error('❌  Missing environment variables:', missing.join(', '));
+    console.error('    Set them in Railway → your service → Variables tab.');
+    process.exit(1);
+  }
+
+  // Print non-sensitive config so Railway logs show what was picked up
+  console.log('[Config] DB_HOST   :', process.env.DB_HOST);
+  console.log('[Config] DB_PORT   :', process.env.DB_PORT);
+  console.log('[Config] DB_NAME   :', process.env.DB_NAME);
+  console.log('[Config] DB_USER   :', process.env.DB_USER);
+  console.log('[Config] NODE_ENV  :', process.env.NODE_ENV);
+  console.log('[Config] PORT      :', PORT);
+
   try {
     await connect();          // verify MySQL reachability
     startCleanupJob();        // expired token GC every 15 min
@@ -73,7 +90,9 @@ app.use((err, req, res, next) => {
       console.log(`    Allowed origins: ${allowedOrigins.join(', ')}`);
     });
   } catch (err) {
-    console.error('❌  Startup failed:', err.message, err.stack);
+    console.error('❌  Startup failed:', err.message);
+    console.error('    Check DB credentials, Aiven firewall, and SSL settings.');
+    console.error(err.stack);
     process.exit(1);
   }
 })();
