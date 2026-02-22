@@ -1,6 +1,7 @@
 // ─── Kodbank API configuration ───────────────────────────────────────────────
-// After Railway deployment, replace the URL below with your Railway backend URL.
-// Example: https://kodbank-backend-production.up.railway.app/api
-// Then commit and push — Vercel will auto-redeploy.
+// LOCAL DEV  → http://localhost:5000/api
+// PRODUCTION → https://kodbanking-production.up.railway.app/api
+// Switch the line below when deploying to Vercel.
 // ─────────────────────────────────────────────────────────────────────────────
-window.KB_API = 'https://kodbanking-production.up.railway.app/api';
+window.KB_API = 'http://localhost:5000/api';
+// window.KB_API = 'https://kodbanking-production.up.railway.app/api'; // ← uncomment for production

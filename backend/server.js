@@ -24,8 +24,12 @@ app.set('trust proxy', 1);   // trust Railway/Render reverse proxy
 app.use(helmet());            // secure headers
 app.use(cors({
   origin: (origin, cb) => {
-    // allow same-origin requests (no Origin header) and listed origins
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    // allow same-origin (no Origin header), listed origins, and
+    // 'null' origin sent by browsers for file:// pages in local dev
+    const isDev = process.env.NODE_ENV !== 'production';
+    if (!origin || allowedOrigins.includes(origin) || (isDev && origin === 'null')) {
+      return cb(null, true);
+    }
     cb(new Error(`CORS: origin ${origin} not allowed`));
   },
   credentials: true,
@@ -64,7 +68,7 @@ app.use((err, req, res, next) => {
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 (async () => {
   // ── Validate required env vars before touching the DB ──
-  const REQUIRED = ['DB_HOST','DB_PORT','DB_USER','DB_PASSWORD','DB_NAME','JWT_SECRET'];
+  const REQUIRED = ['DB_HOST','DB_PORT','DB_USER','DB_PASSWORD','DB_NAME','JWT_SECRET','HF_TOKEN'];
   const missing  = REQUIRED.filter(k => !process.env[k]);
   if (missing.length) {
     console.error('❌  Missing environment variables:', missing.join(', '));
@@ -84,10 +88,19 @@ app.use((err, req, res, next) => {
     await connect();          // verify MySQL reachability
     startCleanupJob();        // expired token GC every 15 min
 
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`🚀  Kodbank API  →  http://localhost:${PORT}`);
       console.log(`    Environment : ${process.env.NODE_ENV || 'development'}`);
       console.log(`    Allowed origins: ${allowedOrigins.join(', ')}`);
+    });
+
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.error(`❌  Port ${PORT} is already in use. Kill the existing process and retry.`);
+      } else {
+        console.error('❌  Server error:', err.message);
+      }
+      process.exit(1);
     });
   } catch (err) {
     console.error('❌  Startup failed:', err.message);
