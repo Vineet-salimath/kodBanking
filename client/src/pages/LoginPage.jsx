@@ -108,33 +108,8 @@ export default function LoginPage() {
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.65, marginBottom: 28 }}>
               Next-generation banking with real-time insights, AI-powered advice, and bank-grade security.
             </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[
-                { icon: '🔐', text: '256-bit end-to-end encryption' },
-                { icon: '🤖', text: 'AI financial assistant built-in' },
-                { icon: '⚡', text: 'Instant transfers & analytics' },
-                { icon: '🏦', text: 'RBI compliant & insured deposits' },
-              ].map((f, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.18 + i * 0.08 }}
-                  style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.09)', fontSize: 13, color: 'rgba(255,255,255,0.82)' }}>
-                  <span style={{ fontSize: 16 }}>{f.icon}</span> {f.text}
-                </motion.div>
-              ))}
-            </div>
           </div>
 
-          {/* Stats */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}
-            style={{ display: 'flex', gap: 24, marginTop: 36, position: 'relative', zIndex: 1 }}>
-            {[['₹2.4Cr+', 'Managed'], ['12K+', 'Customers'], ['99.9%', 'Uptime']].map(([v, l]) => (
-              <div key={l}>
-                <p style={{ fontSize: 18, fontWeight: 700, color: '#c084fc' }}>{v}</p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{l}</p>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* ₹”€₹”€ RIGHT: Form panel ₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€ */}
