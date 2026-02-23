@@ -15,9 +15,17 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Trusted origins ──────────────────────────────────────────────────────────
-const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
-  .split(',')
-  .map(o => o.trim());
+const DEFAULT_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://kod-banking-red.vercel.app',
+];
+const allowedOrigins = process.env.CLIENT_ORIGIN
+  ? [...new Set([
+      ...process.env.CLIENT_ORIGIN.split(',').map(o => o.trim()),
+      ...DEFAULT_ORIGINS,
+    ])]
+  : DEFAULT_ORIGINS;
 
 // ─── Core Middleware ──────────────────────────────────────────────────────────
 app.set('trust proxy', 1);   // trust Railway/Render reverse proxy
