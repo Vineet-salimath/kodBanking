@@ -230,7 +230,7 @@ export default function ProfileDropdown() {
 
   /* ── render ───────────────────────────────────────────────── */
   return (
-    <div ref={wrapperRef} style={{ position: 'relative', padding: '12px', borderTop: '1px solid #252530' }}>
+    <div ref={wrapperRef} style={{ position: 'relative', padding: '12px', borderTop: '1px solid var(--border-color)' }}>
 
       {/* ── Trigger ─────────────────────────────────────────── */}
       <motion.button
@@ -247,9 +247,9 @@ export default function ProfileDropdown() {
           width:         '100%',
           padding:       '8px 10px',
           borderRadius:  12,
-          border:        `1px solid ${open ? 'rgba(168,85,247,0.4)' : '#333340'}`,
+          border:        `1px solid ${open ? 'rgba(168,85,247,0.4)' : 'var(--border-color)'}`,
           cursor:        'pointer',
-          background:    open ? 'rgba(168,85,247,0.08)' : '#252530',
+          background:    open ? 'rgba(168,85,247,0.08)' : 'var(--glass-bg-2)',
           transition:    'border-color 0.2s, background 0.2s',
           fontFamily:    'inherit',
         }}
@@ -266,17 +266,17 @@ export default function ProfileDropdown() {
 
         {/* name + role */}
         <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
-          <p style={{ fontSize: 13, fontWeight: 600, color: '#f1f5f9', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {firstName}
           </p>
-          <p style={{ fontSize: 11, color: '#475569', margin: 0 }}>Customer</p>
+          <p style={{ fontSize: 11, color: 'var(--text-secondary)', margin: 0 }}>Customer</p>
         </div>
 
         {/* chevron */}
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          style={{ color: '#475569', fontSize: 10, flexShrink: 0 }}
+          style={{ color: 'var(--text-secondary)', fontSize: 10, flexShrink: 0 }}
         >
           ▲
         </motion.span>
@@ -297,18 +297,20 @@ export default function ProfileDropdown() {
               bottom:       'calc(100% + 8px)',
               left:         0,
               right:        0,
-              background:   '#1a1c22',
-              border:       '1px solid #2a2a38',
+              background:   'var(--glass-bg)',
+              border:       '1px solid var(--border-color)',
               borderRadius: 14,
               padding:      '6px',
-              boxShadow:    '0 -16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              boxShadow:    'var(--glass-shadow)',
               zIndex:       50,
             }}
           >
             {/* User info header */}
             <div style={{ padding: '8px 12px 10px', borderBottom: '1px solid #ffffff08', marginBottom: 4 }}>
-              <p style={{ fontSize: 13, fontWeight: 600, color: '#f1f5f9', margin: 0 }}>{firstName}</p>
-              <p style={{ fontSize: 11, color: '#475569', margin: '2px 0 0' }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>{firstName}</p>
+              <p style={{ fontSize: 11, color: 'var(--text-secondary)', margin: '2px 0 0' }}>
                 {user?.email || 'Kodbank Customer'}
               </p>
             </div>

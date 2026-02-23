@@ -79,18 +79,18 @@ function MonthlyChart({ transactions = [] }) {
   const maxV = Math.max(...bars.flatMap(m => [m.credit, m.debit]), 1);
 
   return (
-    <div className="rounded-2xl p-5" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+    <div className="rounded-2xl p-5" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <span style={{ color: '#a855f7' }}>{Ico.chart}</span>
-          <p className="text-xs text-slate-500 uppercase tracking-widest font-medium">Monthly Flow</p>
+          <span style={{ color: 'var(--accent-purple)' }}>{Ico.chart}</span>
+          <p className="text-xs uppercase tracking-widest font-medium" style={{ color: 'var(--text-secondary)' }}>Monthly Flow</p>
         </div>
         <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1 text-xs text-slate-500">
+          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
             <span className="w-2 h-2 rounded-sm inline-block" style={{ background: '#22c55e' }} /> Credit
           </span>
-          <span className="flex items-center gap-1 text-xs text-slate-500">
+          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
             <span className="w-2 h-2 rounded-sm inline-block" style={{ background: '#ef4444' }} /> Debit
           </span>
         </div>
@@ -142,10 +142,11 @@ function MonthlyChart({ transactions = [] }) {
                   style={{
                     position: 'absolute', bottom: '100%', left: '50%',
                     transform: 'translateX(-50%)',
-                    background: '#111118', border: '1px solid #333340',
+                    background: 'var(--glass-bg)', border: '1px solid var(--border-color)',
                     borderRadius: 7, padding: '5px 8px',
-                    fontSize: 10, color: '#e2e8f0', whiteSpace: 'nowrap',
+                    fontSize: 10, color: 'var(--text-primary)', whiteSpace: 'nowrap',
                     pointerEvents: 'none', zIndex: 20, marginBottom: 4,
+                    backdropFilter: 'blur(12px)',
                   }}
                 >
                   <span style={{ color: '#22c55e' }}>{fmt(m.credit)}</span>
@@ -161,7 +162,7 @@ function MonthlyChart({ transactions = [] }) {
       {/* Month labels */}
       <div className="flex gap-1.5 mt-1.5">
         {bars.map((m, i) => (
-          <div key={i} className="flex-1 text-center" style={{ fontSize: 9, color: hovered === i ? '#cbd5e1' : '#475569' }}>
+          <div key={i} className="flex-1 text-center" style={{ fontSize: 9, color: hovered === i ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
             {m.label}
           </div>
         ))}
@@ -174,14 +175,14 @@ function MonthlyChart({ transactions = [] }) {
 function StatCard({ icon, label, value, sub, subColor }) {
   return (
     <div className="rounded-2xl p-4 flex items-center gap-3"
-      style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+      style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
       <div className="w-10 h-10 flex items-center justify-center rounded-xl flex-shrink-0"
-        style={{ background: '#252530' }}>
+        style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-subtle)' }}>
         {icon}
       </div>
       <div className="min-w-0">
-        <p className="text-xs text-slate-500 uppercase tracking-wide font-medium truncate">{label}</p>
-        <p className="text-white font-bold text-sm mt-0.5">{value}</p>
+        <p className="text-xs uppercase tracking-wide font-medium truncate" style={{ color: 'var(--text-secondary)' }}>{label}</p>
+        <p className="font-bold text-sm mt-0.5" style={{ color: 'var(--text-primary)' }}>{value}</p>
         {sub && (
           <p className="text-xs mt-0.5 font-medium" style={{ color: subColor || '#a855f7' }}>{sub}</p>
         )}
@@ -224,14 +225,14 @@ function TxRow({ tx }) {
   const peer = tx.counterparty || tx.peer || '';
 
   return (
-    <div className="flex items-center gap-3 py-3 border-b" style={{ borderColor: '#1e1e28' }}>
+    <div className="flex items-center gap-3 py-3 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-        style={{ background: '#252530' }}>
+        style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)' }}>
         {txIconSvg}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-white font-medium truncate">{tx.description || tx.type}</p>
-        <p className="text-xs text-slate-500 truncate">
+        <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>{tx.description || tx.type}</p>
+          <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
           {date}{peer ? ` · ${peer}` : ''}
         </p>
       </div>
@@ -359,11 +360,11 @@ export default function DashboardPage() {
 
   /* ── render ───────────────────────────────────────────────── */
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-primary)' }}>
+    <div className="flex min-h-screen" style={{ minHeight: '100vh', color: 'var(--text-primary)' }}>
 
       {/* ══ SIDEBAR ══════════════════════════════════════════════ */}
       <aside className="flex flex-col w-56 flex-shrink-0 border-r"
-        style={{ background: 'var(--sidebar-bg)', borderColor: 'var(--border-color)', position: 'sticky', top: 0, height: '100vh' }}>
+        style={{ background: 'var(--sidebar-bg)', borderColor: 'var(--border-color)', position: 'sticky', top: 0, height: '100vh', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-5 py-5 border-b" style={{ borderColor: 'var(--border-color)' }}>
@@ -371,12 +372,12 @@ export default function DashboardPage() {
             style={{ background: 'linear-gradient(135deg,#9333ea,#3b82f6)' }}>
             K
           </div>
-          <span className="font-bold text-white text-lg tracking-tight">Kodbank</span>
+          <span className="font-bold text-lg tracking-tight" style={{ color: 'var(--text-primary)' }}>Kodbank</span>
         </div>
 
         {/* MAIN nav */}
         <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-          <p className="text-xs text-slate-600 uppercase tracking-widest font-medium px-2 mb-2">Main</p>
+          <p className="text-xs uppercase tracking-widest font-medium px-2 mb-2" style={{ color: 'var(--text-secondary)' }}>Main</p>
           {NAV_MAIN.map(item => {
             const active = activeNav === item.id;
             return (
@@ -406,7 +407,7 @@ export default function DashboardPage() {
 
         {/* ── Top bar ─────────────────────────────────────────── */}
         <header className="flex items-center justify-between px-8 py-4 border-b flex-shrink-0"
-          style={{ background: 'var(--header-bg)', borderColor: 'var(--border-color)' }}>
+          style={{ background: 'var(--header-bg)', borderColor: 'var(--border-color)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
           <h1 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
             {activeNav.charAt(0).toUpperCase() + activeNav.slice(1)}
           </h1>
@@ -415,7 +416,7 @@ export default function DashboardPage() {
             {/* Search */}
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm"
               style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)' }}>
-              <svg className="w-4 h-4 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-muted)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -423,10 +424,10 @@ export default function DashboardPage() {
                 placeholder="Search transactions..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-transparent border-none outline-none text-slate-300 placeholder-slate-600 text-sm w-44"
+                className="bg-transparent border-none outline-none text-sm w-44" style={{ color: 'var(--text-primary)' }}
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0">
+                <button onClick={() => setSearchQuery('')} className="transition-colors flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
                   <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
@@ -439,7 +440,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => setNotifOpen(o => !o)}
                 className="relative w-9 h-9 flex items-center justify-center rounded-xl transition-colors hover:bg-white/5"
-                style={{ background: notifOpen ? '#2d2d3a' : '#252530', border: '1px solid #333340' }}>
+                style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)' }}>
                 <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -459,12 +460,12 @@ export default function DashboardPage() {
                   exit={{ opacity: 0, y: -8, scale: 0.96 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
                   className="absolute right-0 mt-2 w-80 rounded-2xl shadow-2xl z-50 overflow-hidden"
-                  style={{ background: '#1a1a22', border: '1px solid #2d2d3a', top: '100%' }}>
+                  style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', top: '100%' }}>
 
                   {/* Header */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: '#2d2d3a' }}>
+                  <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'var(--border-color)' }}>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-white">Notifications</span>
+                      <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Notifications</span>
                       {unreadCount > 0 && (
                         <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-500/20 text-orange-400">{unreadCount} new</span>
                       )}
@@ -483,18 +484,18 @@ export default function DashboardPage() {
                         <div key={n.id}
                           onClick={() => setReadNotifs(prev => new Set([...prev, n.id]))}
                           className="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-white/5 transition-colors"
-                          style={{ borderBottom: idx < DUMMY_NOTIFS.length - 1 ? '1px solid #252530' : 'none', background: isUnread ? 'rgba(147,51,234,0.04)' : 'transparent' }}>
+                          style={{ borderBottom: idx < DUMMY_NOTIFS.length - 1 ? '1px solid var(--border-subtle)' : 'none', background: isUnread ? 'rgba(147,51,234,0.08)' : 'transparent' }}>
                           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                             style={{ background: iconColor + '22', color: iconColor }}>
                             {n.type === 'credit' ? Ico.credit : n.type === 'pending' ? Ico.pending : Ico.debit}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-2">
-                              <span className="text-xs font-semibold text-white truncate">{n.title}</span>
+                              <span className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{n.title}</span>
                               {isUnread && <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />}
                             </div>
-                            <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">{n.body}</p>
-                            <p className="text-xs text-slate-600 mt-1">{n.time}</p>
+                            <p className="text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{n.body}</p>
+                            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{n.time}</p>
                           </div>
                         </div>
                       );
@@ -502,7 +503,7 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-2.5 border-t text-center" style={{ borderColor: '#2d2d3a' }}>
+                  <div className="px-4 py-2.5 border-t text-center" style={{ borderColor: 'var(--border-color)' }}>
                     <button className="text-xs text-purple-400 hover:text-purple-300 transition-colors">View all notifications</button>
                   </div>
                 </motion.div>
@@ -515,7 +516,7 @@ export default function DashboardPage() {
               onClick={() => setActiveNav('profile')}
               title="My Profile"
               className="w-9 h-9 flex items-center justify-center rounded-xl transition-colors hover:bg-white/5"
-              style={{ background: activeNav === 'profile' ? '#2d2d3a' : '#252530', border: activeNav === 'profile' ? '1px solid rgba(168,85,247,0.4)' : '1px solid #333340' }}>
+              style={{ background: activeNav === 'profile' ? 'var(--glass-bg)' : 'var(--glass-bg-2)', border: activeNav === 'profile' ? '1px solid rgba(168,85,247,0.4)' : '1px solid var(--border-color)' }}>
               <svg className="w-4 h-4" style={{ color: activeNav === 'profile' ? '#a78bfa' : '#9ca3af' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
@@ -524,7 +525,7 @@ export default function DashboardPage() {
         </header>
 
         {/* ── Page body ────────────────────────────────────────── */}
-        <main className="flex-1 overflow-y-auto px-8 py-6" style={{ background: '#13131a' }}>
+        <main className="flex-1 overflow-y-auto px-8 py-6" style={{ background: 'transparent' }}>
 
           {/* ═══ DASHBOARD VIEW ════════════════════════════════ */}
           <AnimatePresence mode="wait">
@@ -534,14 +535,14 @@ export default function DashboardPage() {
               {/* Greeting row */}
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
                     Hello, <span style={{ color: '#a855f7' }}>{firstName}</span>
                   </h2>
-                  <p className="text-slate-500 text-sm mt-1">Here's your financial overview</p>
+                  <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Here's your financial overview</p>
                 </div>
-                <p className="text-right text-slate-400 text-sm leading-snug">
+                <p className="text-right text-sm leading-snug" style={{ color: 'var(--text-secondary)' }}>
                   {currentTime.split(' · ')[0]}<br />
-                  <span className="text-slate-500">{currentTime.split(' · ')[1]}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>{currentTime.split(' · ')[1]}</span>
                 </p>
               </div>
 
@@ -582,9 +583,9 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* LEFT – Recent Transactions (2/3 width) */}
-                <div className="lg:col-span-2 rounded-2xl overflow-hidden" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
-                  <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#2a2a35' }}>
-                    <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                <div className="lg:col-span-2 rounded-2xl overflow-hidden" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
+                  <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: 'var(--border-color)' }}>
+                    <p className="flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                       <span style={{ color: '#a855f7' }}>{Ico.list}</span> Recent Transactions
                     </p>
                     <button
@@ -597,11 +598,11 @@ export default function DashboardPage() {
                   <div className="px-5">
                     {txLoading
                       ? Array.from({ length: 5 }).map((_, i) => (
-                          <div key={i} className="h-14 my-2 rounded-xl animate-pulse" style={{ background: '#252530' }} />
+                          <div key={i} className="h-14 my-2 rounded-xl animate-pulse" style={{ background: 'var(--glass-bg-2)' }} />
                         ))
                       : recentFiltered.length > 0
                         ? recentFiltered.map(tx => <TxRow key={tx.id} tx={tx} />)
-                        : <p className="py-8 text-center text-slate-600 text-sm">No transactions found.</p>
+                        : <p className="py-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>No transactions found.</p>
                     }
                   </div>
                 </div>
@@ -611,8 +612,8 @@ export default function DashboardPage() {
                   <MonthlyChart transactions={transactions} />
 
                   {/* Quick Actions */}
-                  <div className="rounded-2xl p-5" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
-                    <p className="flex items-center gap-2 text-xs text-slate-500 uppercase tracking-widest font-medium mb-3">
+                  <div className="rounded-2xl p-5" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
+                    <p className="flex items-center gap-2 text-xs uppercase tracking-widest font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>
                       <span style={{ color: '#f59e0b' }}>{Ico.lightning}</span> Quick Actions
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -629,8 +630,8 @@ export default function DashboardPage() {
                             else if (label === 'History') setActiveNav('transactions');
                             else toast(`${label} coming soon!`);
                           }}
-                          className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl text-xs font-medium text-slate-400 transition-all hover:text-white"
-                          style={{ background: '#252530', border: '1px solid #333340' }}
+                          className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl text-xs font-medium transition-all hover:scale-105"
+                          style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
                         >
                           <span>{Ico[svgKey]}</span>
                           {label}
@@ -657,7 +658,7 @@ export default function DashboardPage() {
               <motion.div key="tx" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-1">
-                  <h2 className="text-xl font-bold text-white">Transaction History</h2>
+                  <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Transaction History</h2>
                   {searchQuery && (
                     <span className="text-xs px-2.5 py-1 rounded-full font-medium"
                       style={{ background: 'rgba(168,85,247,0.15)', color: '#c4b5fd', border: '1px solid rgba(168,85,247,0.25)' }}>
@@ -665,13 +666,13 @@ export default function DashboardPage() {
                     </span>
                   )}
                 </div>
-                <p className="text-slate-500 text-sm mb-4">
+                <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
                   {searchQuery ? 'Showing filtered results' : 'All your recent activity'}
                 </p>
 
                 {/* Inline search bar */}
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl mb-4"
-                  style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+                  style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(12px)' }}>
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#6b7280' }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                   </svg>
@@ -680,10 +681,10 @@ export default function DashboardPage() {
                     placeholder="Search by description, merchant, or amount…"
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-transparent border-none outline-none text-slate-300 placeholder-slate-600 text-sm"
+                    className="flex-1 bg-transparent border-none outline-none text-sm" style={{ color: 'var(--text-primary)' }}
                   />
                   {searchQuery && (
-                    <button onClick={() => setSearchQuery('')} className="text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0">
+                    <button onClick={() => setSearchQuery('')} className="transition-colors flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
                       <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                       </svg>
@@ -692,11 +693,11 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Transaction list */}
-                <div className="rounded-2xl overflow-hidden" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+                <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
                   <div className="px-6">
                     {txLoading
                       ? Array.from({ length: 10 }).map((_, i) => (
-                          <div key={i} className="h-14 my-2 rounded-xl animate-pulse" style={{ background: '#252530' }} />
+                          <div key={i} className="h-14 my-2 rounded-xl animate-pulse" style={{ background: 'var(--glass-bg-2)' }} />
                         ))
                       : txList.length > 0
                         ? txList.map(tx => <TxRow key={tx.id} tx={tx} />)
@@ -705,7 +706,7 @@ export default function DashboardPage() {
                             <svg className="w-12 h-12 mx-auto mb-3 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
-                            <p className="text-slate-600 text-sm mb-2">
+                            <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
                               {searchQuery ? `No transactions match "${searchQuery}"` : 'No transactions yet.'}
                             </p>
                             {searchQuery && (
@@ -726,50 +727,50 @@ export default function DashboardPage() {
           {/* ═══ TRANSFER VIEW ══════════════════════════════ */}
           {activeNav === 'transfer' && (
             <motion.div key="transfer" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-              <h2 className="text-xl font-bold text-white mb-1">Send Money</h2>
-              <p className="text-slate-500 text-sm mb-6">Transfer funds securely to any account</p>
-              <div className="max-w-lg rounded-2xl p-6" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+              <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Send Money</h2>
+              <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>Transfer funds securely to any account</p>
+              <div className="max-w-lg rounded-2xl p-6" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(20px)' }}>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs text-slate-500 uppercase tracking-wider mb-1.5">Recipient Account No.</label>
+                    <label className="block text-xs uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-secondary)' }}>Recipient Account No.</label>
                     <input
                       type="text" placeholder="Enter account number"
-                      className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600 outline-none"
-                      style={{ background: '#252530', border: '1px solid #333340' }}
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                      style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-500 uppercase tracking-wider mb-1.5">Recipient Name</label>
+                    <label className="block text-xs uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-secondary)' }}>Recipient Name</label>
                     <input
                       type="text" placeholder="Full name"
-                      className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600 outline-none"
-                      style={{ background: '#252530', border: '1px solid #333340' }}
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                      style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs text-slate-500 uppercase tracking-wider mb-1.5">Amount (₹)</label>
+                      <label className="block text-xs uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-secondary)' }}>Amount (₹)</label>
                       <input
                         type="number" placeholder="0.00"
-                        className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600 outline-none"
-                        style={{ background: '#252530', border: '1px solid #333340' }}
+                        className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                        style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-slate-500 uppercase tracking-wider mb-1.5">IFSC Code</label>
+                      <label className="block text-xs uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-secondary)' }}>IFSC Code</label>
                       <input
                         type="text" placeholder="HDFC0001234"
-                        className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600 outline-none"
-                        style={{ background: '#252530', border: '1px solid #333340' }}
+                        className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                        style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-500 uppercase tracking-wider mb-1.5">Remark (optional)</label>
+                    <label className="block text-xs uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-secondary)' }}>Remark (optional)</label>
                     <input
                       type="text" placeholder="e.g. Rent, Groceries…"
-                      className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600 outline-none"
-                      style={{ background: '#252530', border: '1px solid #333340' }}
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                      style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                     />
                   </div>
                   <button
@@ -780,7 +781,7 @@ export default function DashboardPage() {
                     ↗&nbsp; Send Money
                   </button>
                 </div>
-                <p className="flex items-center justify-center gap-1.5 text-xs text-slate-600 mt-4">
+                <p className="flex items-center justify-center gap-1.5 text-xs mt-4" style={{ color: 'var(--text-muted)' }}>
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                   256-bit encrypted · RBI compliant
                 </p>
@@ -791,8 +792,8 @@ export default function DashboardPage() {
           {/* ═══ MY CARD VIEW ══════════════════════════════════ */}
           {activeNav === 'mycard' && (
             <motion.div key="mycard" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-              <h2 className="text-xl font-bold text-white mb-1">My Card</h2>
-              <p className="text-slate-500 text-sm mb-6">Your virtual debit card</p>
+              <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>My Card</h2>
+              <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>Your virtual debit card</p>
               <div className="flex flex-col lg:flex-row gap-6 items-start">
                 {/* Card visual */}
                 <motion.div
@@ -837,15 +838,15 @@ export default function DashboardPage() {
                     { label: 'Daily Limit',  value: '₹1,00,000' },
                   ].map(({ label, value }) => (
                     <div key={label} className="flex items-center justify-between px-4 py-3 rounded-xl"
-                      style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
-                      <span className="text-xs text-slate-500 uppercase tracking-wider">{label}</span>
-                      <span className="text-sm text-white font-medium">{value}</span>
+                      style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
+                      <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{label}</span>
+                      <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{value}</span>
                     </div>
                   ))}
                   <button
                     onClick={() => toast('Card controls coming soon!', { icon: '🚧' })}
-                    className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                    style={{ background: '#252530', border: '1px solid #333340' }}
+                    className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+                    style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                   >
                     🔒 &nbsp;Block Card
                   </button>
@@ -857,18 +858,18 @@ export default function DashboardPage() {
           {/* ═══ PROFILE VIEW ══════════════════════════════════ */}
           {activeNav === 'profile' && (
             <motion.div key="profile" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-              <h2 className="text-xl font-bold text-white mb-1">My Profile</h2>
-              <p className="text-slate-500 text-sm mb-6">Account info & preferences</p>
+              <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>My Profile</h2>
+              <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>Account info & preferences</p>
               <div className="max-w-2xl space-y-4">
                 {/* Avatar block */}
-                <div className="flex items-center gap-5 p-5 rounded-2xl" style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+                <div className="flex items-center gap-5 p-5 rounded-2xl" style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(20px)' }}>
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
                     style={{ background: 'linear-gradient(135deg,#9333ea,#3b82f6)' }}>
                     {(user?.username?.[0] || 'K').toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-white font-bold text-lg">{user?.username || 'Kodbank User'}</p>
-                    <p className="text-slate-500 text-sm">{user?.email || 'user@kodbank.in'}</p>
+                    <p className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{user?.username || 'Kodbank User'}</p>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{user?.email || 'user@kodbank.in'}</p>
                     <span className="inline-flex items-center gap-1 mt-1 text-xs font-medium px-2 py-0.5 rounded-full"
                       style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e' }}>
                       ● Verified Account
@@ -876,8 +877,8 @@ export default function DashboardPage() {
                   </div>
                   <button
                     onClick={() => toast('Edit profile coming soon!', { icon: '✏️' })}
-                    className="ml-auto px-4 py-2 rounded-xl text-xs font-medium text-slate-300 transition hover:text-white"
-                    style={{ background: '#252530', border: '1px solid #333340' }}
+                    className="ml-auto px-4 py-2 rounded-xl text-xs font-medium transition"
+                    style={{ background: 'var(--glass-bg-2)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
                   >
                     Edit Profile
                   </button>
@@ -896,10 +897,10 @@ export default function DashboardPage() {
                   { label: 'KYC Status',       value: '✅ Completed',                       icon: '🛡️' },
                 ].map(({ label, value, icon }) => (
                   <div key={label} className="flex items-center gap-4 px-5 py-3.5 rounded-xl"
-                    style={{ background: '#1a1a22', border: '1px solid #2a2a35' }}>
+                    style={{ background: 'var(--glass-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}>
                     <span className="text-lg w-7 text-center flex-shrink-0">{icon}</span>
-                    <span className="text-xs text-slate-500 uppercase tracking-wider w-36 flex-shrink-0">{label}</span>
-                    <span className="text-sm text-white font-medium">{value}</span>
+                    <span className="text-xs uppercase tracking-wider w-36 flex-shrink-0" style={{ color: 'var(--text-secondary)' }}>{label}</span>
+                    <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{value}</span>
                   </div>
                 ))}
 
@@ -907,7 +908,7 @@ export default function DashboardPage() {
                 <div className="p-4 rounded-xl flex items-center justify-between" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.18)' }}>
                   <div>
                     <p className="text-sm font-medium text-red-400">Close Account</p>
-                    <p className="text-xs text-slate-600 mt-0.5">Permanently delete your Kodbank account</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>Permanently delete your Kodbank account</p>
                   </div>
                   <button
                     onClick={() => toast('Please contact support to close your account.', { icon: '☎️' })}

@@ -1,11 +1,11 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { loginUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-/* â”€â”€â”€ Icons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ₹”€₹”€₹”€ Icons ₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€ */
 function UserIcon() {
   return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
 }
@@ -21,13 +21,13 @@ function ShieldIcon() {
   return <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
 }
 
-/* â”€â”€â”€ Animation helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ₹”€₹”€₹”€ Animation helper ₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€ */
 const rise = (delay = 0) => ({
   hidden:  { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 });
 
-/* â•â• Main component â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ₹•₹• Main component ₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹•₹• */
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -80,7 +80,7 @@ export default function LoginPage() {
         }}
         className="auth-card"
       >
-        {/* â”€â”€ LEFT: Brand panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ₹”€₹”€ LEFT: Brand panel ₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€ */}
         <div style={{
           background: 'linear-gradient(145deg, #1a0533 0%, #0d1b4a 50%, #001030 100%)',
           padding: '48px 40px', display: 'flex', flexDirection: 'column',
@@ -111,10 +111,10 @@ export default function LoginPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                { icon: 'ðŸ›¡ï¸', text: '256-bit end-to-end encryption' },
-                { icon: 'ðŸ¤–', text: 'AI financial assistant built-in' },
-                { icon: 'âš¡', text: 'Instant transfers & analytics' },
-                { icon: 'ðŸ¦', text: 'RBI compliant & insured deposits' },
+                { icon: '🔐', text: '256-bit end-to-end encryption' },
+                { icon: '🤖', text: 'AI financial assistant built-in' },
+                { icon: '⚡', text: 'Instant transfers & analytics' },
+                { icon: '🏦', text: 'RBI compliant & insured deposits' },
               ].map((f, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.18 + i * 0.08 }}
@@ -128,7 +128,7 @@ export default function LoginPage() {
           {/* Stats */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}
             style={{ display: 'flex', gap: 24, marginTop: 36, position: 'relative', zIndex: 1 }}>
-            {[['â‚¹2.4Cr+', 'Managed'], ['12K+', 'Customers'], ['99.9%', 'Uptime']].map(([v, l]) => (
+            {[['₹2.4Cr+', 'Managed'], ['12K+', 'Customers'], ['99.9%', 'Uptime']].map(([v, l]) => (
               <div key={l}>
                 <p style={{ fontSize: 18, fontWeight: 700, color: '#c084fc' }}>{v}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{l}</p>
@@ -137,7 +137,7 @@ export default function LoginPage() {
           </motion.div>
         </div>
 
-        {/* â”€â”€ RIGHT: Form panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ₹”€₹”€ RIGHT: Form panel ₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€₹”€ */}
         <div style={{ padding: '48px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
           <motion.div variants={rise(0.1)} initial="hidden" animate="visible" style={{ marginBottom: 32 }}>
@@ -159,7 +159,7 @@ export default function LoginPage() {
                   style={{ borderColor: errors.username ? 'var(--color-danger)' : focused === 'username' ? 'var(--accent-purple)' : undefined }}
                 />
               </div>
-              {errors.username && <p className="error-text">âš  {errors.username}</p>}
+              {errors.username && <p className="error-text">  {errors.username}</p>}
             </motion.div>
 
             {/* Password */}
@@ -170,7 +170,7 @@ export default function LoginPage() {
               </div>
               <div className="auth-input-wrapper">
                 <span className="auth-input-icon"><LockIcon /></span>
-                <input name="password" type={showPw ? 'text' : 'password'} placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                <input name="password" type={showPw ? 'text' : 'password'} placeholder="Enter password"
                   value={form.password} onChange={handleChange}
                   onFocus={() => setFocused('password')} onBlur={() => setFocused('')}
                   autoComplete="current-password"
@@ -181,7 +181,7 @@ export default function LoginPage() {
                   <EyeIcon open={showPw} />
                 </button>
               </div>
-              {errors.password && <p className="error-text">âš  {errors.password}</p>}
+              {errors.password && <p className="error-text">  {errors.password}</p>}
             </motion.div>
 
             {/* Submit */}
@@ -189,7 +189,7 @@ export default function LoginPage() {
               <button type="submit" disabled={loading} className="btn-primary"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 0' }}>
                 {loading
-                  ? <><span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', animation: 'spin 0.7s linear infinite', display: 'inline-block' }} /> Signing inâ€¦</>
+                  ? <><span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', animation: 'spin 0.7s linear infinite', display: 'inline-block' }} /> Signing in...</>
                   : <><LockIcon size={14} /> Log In</>}
               </button>
             </motion.div>
@@ -214,9 +214,9 @@ export default function LoginPage() {
             className="trust-strip" style={{ marginTop: 28 }}>
             <span style={{ color: '#22c55e', display: 'flex' }}><ShieldIcon /></span>
             256-bit encrypted
-            <span style={{ color: 'var(--border-color)' }}>Â·</span>
+            <span style={{ color: 'var(--border-color)' }}> · </span>
             Secure session
-            <span style={{ color: 'var(--border-color)' }}>Â·</span>
+            <span style={{ color: 'var(--border-color)' }}> · </span>
             RBI compliant
           </motion.div>
         </div>
