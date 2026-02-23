@@ -1,13 +1,9 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "frontend/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "^/$",           "dest": "/frontend/login.html" },
-    { "src": "^/login$",      "dest": "/frontend/login.html" },
-    { "src": "^/register$",   "dest": "/frontend/register.html" },
-    { "src": "^/dashboard$",  "dest": "/frontend/dashboard.html" },
-    { "src": "^/(.*)",        "dest": "/frontend/$1" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/dist",
+  "installCommand": "echo skip",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -115,10 +115,6 @@ export default function GradientBalanceCard({ onBalanceRevealed }) {
                 <p className="text-white/60 text-xs font-medium uppercase tracking-[0.15em] mb-1">
                   Available Balance
                 </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-white/70 text-xs">Live · Updated now</span>
-                </div>
               </div>
 
               {/* Kodbank chip */}
