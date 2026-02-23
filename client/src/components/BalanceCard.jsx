@@ -40,7 +40,7 @@ export default function BalanceCard() {
     try {
       const { data } = await fetchBalance();
       setBalance(data.data.balance);
-      setUserName(data.data.name);
+      setUserName(data.data.username);
       setState('shown');
     } catch (err) {
       toast.error(err.message);
@@ -142,15 +142,6 @@ export default function BalanceCard() {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="mt-6 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"
               />
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="text-green-400 text-xs mt-4 flex items-center justify-center gap-1"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
-                Live balance · Secured by SSL
-              </motion.p>
             </div>
 
             {/* Reset button */}

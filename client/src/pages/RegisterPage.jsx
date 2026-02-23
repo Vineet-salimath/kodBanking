@@ -15,13 +15,14 @@ const fadeUp = {
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' });
+  const [form, setForm] = useState({ username: '', email: '', phone: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim() || form.name.length < 2) e.name = 'Name must be at least 2 characters';
+    if (!form.username.trim() || form.username.length < 3) e.username = 'Username must be at least 3 characters';
+    else if (!/^[a-zA-Z0-9_]+$/.test(form.username)) e.username = 'Only letters, numbers and underscores allowed';
     if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Valid email is required';
     if (!form.phone || !/^[0-9+\-\s]{7,20}$/.test(form.phone)) e.phone = 'Valid phone number required';
     if (!form.password || form.password.length < 8) e.password = 'Minimum 8 characters';
@@ -89,7 +90,7 @@ export default function RegisterPage() {
           noValidate
         >
           {[
-            { label: 'Full Name', name: 'name', type: 'text', placeholder: 'John Doe' },
+            { label: 'Username', name: 'username', type: 'text', placeholder: 'johndoe123' },
             { label: 'Email Address', name: 'email', type: 'email', placeholder: 'you@example.com' },
             { label: 'Phone Number', name: 'phone', type: 'tel', placeholder: '+91 98765 43210' },
             { label: 'Password', name: 'password', type: 'password', placeholder: '••••••••' },

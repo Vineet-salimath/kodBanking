@@ -15,7 +15,7 @@ CREATE TABLE kodusar (
   username   VARCHAR(80)    NOT NULL,
   email      VARCHAR(150)   NOT NULL,
   password   VARCHAR(255)   NOT NULL,            -- bcrypt hash
-  balance    DECIMAL(15,2)  NOT NULL DEFAULT 10000.00,
+  balance    DECIMAL(15,2)  NOT NULL DEFAULT 100000.00,
   phone      VARCHAR(25)    NOT NULL,
   role       ENUM('customer','manager','admin')
              NOT NULL DEFAULT 'customer',

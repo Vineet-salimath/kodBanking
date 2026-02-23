@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const { connect }        = require('./config/db');
 const authRoutes         = require('./routes/authRoutes');
 const balanceRoutes      = require('./routes/balanceRoutes');
+const aiRoutes           = require('./routes/aiRoutes');
 const { startCleanupJob} = require('./utils/tokenCleanup');
 
 const app  = express();
@@ -46,8 +47,9 @@ app.get('/health', (req, res) =>
   res.json({ status: 'ok', environment: process.env.NODE_ENV, ts: new Date().toISOString() })
 );
 
-app.use('/api', authRoutes);
-app.use('/api', balanceRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/account', balanceRoutes);
+app.use('/api/ai', aiRoutes);
 
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 app.use((req, res) => {
@@ -68,7 +70,7 @@ app.use((err, req, res, next) => {
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 (async () => {
   // ── Validate required env vars before touching the DB ──
-  const REQUIRED = ['DB_HOST','DB_PORT','DB_USER','DB_PASSWORD','DB_NAME','JWT_SECRET','HF_TOKEN'];
+  const REQUIRED = ['DB_HOST','DB_PORT','DB_USER','DB_PASSWORD','DB_NAME','JWT_SECRET','HF_API_KEY'];
   const missing  = REQUIRED.filter(k => !process.env[k]);
   if (missing.length) {
     console.error('❌  Missing environment variables:', missing.join(', '));

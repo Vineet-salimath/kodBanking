@@ -29,6 +29,9 @@ export const logoutUser = () => api.post('/auth/logout');
 export const getMe = () => api.get('/auth/me');
 
 // ─── Account ──────────────────────────────────────────────────────────────────
-export const fetchBalance = () => api.get('/account/balance');
-
+export const fetchBalance      = () => api.get('/account/balance');
+export const fetchTransactions = (limit = 20, offset = 0) =>
+  api.get(`/account/transactions?limit=${limit}&offset=${offset}`);
+// ─── AI ───────────────────────────────────────────────────────────────────────
+export const chatWithAI = (message) => api.post('/ai/chat', { message }, { timeout: 40000 });
 export default api;

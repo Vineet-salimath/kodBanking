@@ -17,13 +17,13 @@ const fadeUp = {
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
     const e = {};
-    if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Valid email is required';
+    if (!form.username || form.username.trim().length < 3) e.username = 'Username must be at least 3 characters';
     if (!form.password) e.password = 'Password is required';
     return e;
   };
@@ -44,7 +44,7 @@ export default function LoginPage() {
     try {
       const { data } = await loginUser(form);
       login(data.user);
-      toast.success(`Welcome back, ${data.user.name}!`);
+      toast.success(`Welcome back, ${data.user.username}!`);
       navigate('/dashboard', { replace: true });
     } catch (err) {
       toast.error(err.message);
@@ -88,18 +88,18 @@ export default function LoginPage() {
           noValidate
         >
           <motion.div custom={0} variants={fadeUp}>
-            <label htmlFor="email" className="label">Email Address</label>
+            <label htmlFor="username" className="label">Username</label>
             <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={form.email}
+              id="username"
+              name="username"
+              type="text"
+              placeholder="johndoe123"
+              value={form.username}
               onChange={handleChange}
-              className={`input-field ${errors.email ? 'border-red-500/60 focus:ring-red-500' : ''}`}
-              autoComplete="email"
+              className={`input-field ${errors.username ? 'border-red-500/60 focus:ring-red-500' : ''}`}
+              autoComplete="username"
             />
-            {errors.email && <p className="error-text">{errors.email}</p>}
+            {errors.username && <p className="error-text">{errors.username}</p>}
           </motion.div>
 
           <motion.div custom={1} variants={fadeUp}>
@@ -135,10 +135,6 @@ export default function LoginPage() {
             </Link>
           </motion.p>
         </motion.form>
-
-        <motion.p custom={4} variants={fadeUp} className="text-center text-xs text-slate-600 mt-6">
-          Protected with end-to-end encryption · SSL secured
-        </motion.p>
       </motion.div>
     </div>
   );

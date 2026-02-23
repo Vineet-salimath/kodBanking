@@ -62,7 +62,7 @@ const register = async (req, res) => {
 
     await pool.execute(
       `INSERT INTO kodusar (username, email, password, phone, role, balance)
-       VALUES (?, ?, ?, ?, ?, 10000.00)`,
+       VALUES (?, ?, ?, ?, ?, 100000.00)`,
       [username, email, hash, phone, role]
     );
 
@@ -97,7 +97,6 @@ const login = async (req, res) => {
     if (!match) {
       return safeErr(res, 401, 'Invalid username or password');
     }
-
     // Generate JWT
     const expirySeconds = parseInt(process.env.JWT_EXPIRY, 10) || 3600;
     const token = jwt.sign(
@@ -156,4 +155,12 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, registerRules, loginRules, COOKIE_NAME };
+// ─── Me ────────────────────────────────────────────────────────────────────
+const me = (req, res) => {
+  return res.json({
+    success: true,
+    user: { uid: req.user.uid, username: req.user.username, role: req.user.role },
+  });
+};
+
+module.exports = { register, login, logout, me, registerRules, loginRules, COOKIE_NAME };
