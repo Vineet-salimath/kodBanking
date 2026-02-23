@@ -19,6 +19,7 @@ const DEFAULT_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://kod-banking-red.vercel.app',
+  'https://kodbanking-production.up.railway.app',
 ];
 const allowedOrigins = process.env.CLIENT_ORIGIN
   ? [...new Set([
