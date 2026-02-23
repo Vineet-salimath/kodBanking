@@ -414,7 +414,96 @@
 }
 .animate-float { animation: float 4s ease-in-out infinite; }
 
-/* ── Scrollbar ───────────────────────────────────────────────── */
+/* ── Auth pages ──────────────────────────────────────────────── */
+.auth-bg {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(ellipse at 15% 35%, rgba(147,51,234,0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 65%, rgba(59,130,246,0.22) 0%, transparent 45%);
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="light"] .auth-bg {
+  background-image:
+    radial-gradient(ellipse at 15% 35%, rgba(147,51,234,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 65%, rgba(59,130,246,0.10) 0%, transparent 45%);
+}
+.auth-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  backdrop-filter: blur(24px);
+  transition: background 0.3s, border-color 0.3s;
+}
+[data-theme="light"] .auth-card {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+.auth-divider {
+  height: 1px;
+  background: var(--border-color);
+}
+.auth-link {
+  color: var(--accent-purple);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.auth-link:hover { color: var(--accent-cyan); }
+.auth-input-wrapper { position: relative; }
+.auth-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.auth-input-wrapper .input-field { padding-left: 40px; }
+.auth-input-wrapper .pr-10       { padding-right: 40px; }
+.auth-eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  transition: color 0.2s;
+}
+.auth-eye-btn:hover { color: var(--text-primary); }
+
+/* Badge / trust strip */
+.trust-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Dashboard card overrides — so views adapt to light mode */
+.kb-view-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+.kb-view-input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+}
+
 ::-webkit-scrollbar           { width: 5px; }
 ::-webkit-scrollbar-track     { background: var(--bg-2); }
 ::-webkit-scrollbar-thumb     { background: var(--accent-purple); border-radius: 3px; opacity: 0.5; }

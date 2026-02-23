@@ -11,19 +11,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { fetchBalance } from '../services/api';
 
-/* ── Theme helpers ──────────────────────────────────────────── */
-const THEME_KEY = 'kb_theme';
-
-function getStoredTheme() {
-  return localStorage.getItem(THEME_KEY) || 'dark';
-}
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  document.documentElement.classList.toggle('light', theme === 'light');
-  document.documentElement.classList.toggle('dark',  theme === 'dark');
-  localStorage.setItem(THEME_KEY, theme);
-}
+import { useTheme } from '../context/ThemeContext';
 
 /* ── Export helper ──────────────────────────────────────────── */
 function buildAccountId(username = '') {
@@ -169,18 +157,15 @@ function Divider() {
 export default function ProfileDropdown() {
   const { user, logout }            = useAuth();
   const navigate                    = useNavigate();
+  const { theme, toggle: toggleTheme } = useTheme();
   const [open,      setOpen]        = useState(false);
-  const [theme,     setTheme]       = useState(getStoredTheme);
   const [exporting, setExporting]   = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const wrapperRef                  = useRef(null);
 
   const firstName = user?.username || 'User';
 
-  /* initialise theme from storage on mount */
-  useEffect(() => {
-    applyTheme(getStoredTheme());
-  }, []);
+  /* initialise theme from storage on mount — handled by ThemeProvider */
 
   /* close on outside click */
   useEffect(() => {
@@ -209,12 +194,11 @@ export default function ProfileDropdown() {
   }, [navigate]);
 
   const handleToggleTheme = useCallback(() => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    setTheme(next);
+    toggleTheme();
     setOpen(false);
+    const next = theme === 'dark' ? 'light' : 'dark';
     toast(`Switched to ${next} mode`, { icon: next === 'dark' ? '🌙' : '☀️' });
-  }, [theme]);
+  }, [theme, toggleTheme]);
 
   const handleExport = useCallback(async () => {
     if (exporting) return;

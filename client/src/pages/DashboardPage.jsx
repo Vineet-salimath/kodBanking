@@ -359,14 +359,14 @@ export default function DashboardPage() {
 
   /* ── render ───────────────────────────────────────────────── */
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: '#13131a', color: '#fff' }}>
+    <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-primary)' }}>
 
       {/* ══ SIDEBAR ══════════════════════════════════════════════ */}
       <aside className="flex flex-col w-56 flex-shrink-0 border-r"
-        style={{ background: '#181820', borderColor: '#252530', position: 'sticky', top: 0, height: '100vh' }}>
+        style={{ background: 'var(--sidebar-bg)', borderColor: 'var(--border-color)', position: 'sticky', top: 0, height: '100vh' }}>
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 px-5 py-5 border-b" style={{ borderColor: '#252530' }}>
+        <div className="flex items-center gap-2.5 px-5 py-5 border-b" style={{ borderColor: 'var(--border-color)' }}>
           <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white text-base"
             style={{ background: 'linear-gradient(135deg,#9333ea,#3b82f6)' }}>
             K
@@ -385,8 +385,8 @@ export default function DashboardPage() {
                 onClick={() => setActiveNav(item.id)}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
                 style={active
-                  ? { background: 'linear-gradient(135deg,rgba(147,51,234,0.25),rgba(59,130,246,0.15))', color: '#fff', border: '1px solid rgba(168,85,247,0.3)' }
-                  : { color: '#6b7280', background: 'transparent', border: '1px solid transparent' }}
+                  ? { background: 'linear-gradient(135deg,rgba(147,51,234,0.25),rgba(59,130,246,0.15))', color: 'var(--text-primary)', border: '1px solid rgba(168,85,247,0.3)' }
+                  : { color: 'var(--text-secondary)', background: 'transparent', border: '1px solid transparent' }}
               >
                 <span className="flex-shrink-0">{Ico[item.icon]}</span>
                 {item.label}
@@ -406,15 +406,15 @@ export default function DashboardPage() {
 
         {/* ── Top bar ─────────────────────────────────────────── */}
         <header className="flex items-center justify-between px-8 py-4 border-b flex-shrink-0"
-          style={{ background: '#181820', borderColor: '#252530' }}>
-          <h1 className="text-lg font-bold text-white">
+          style={{ background: 'var(--header-bg)', borderColor: 'var(--border-color)' }}>
+          <h1 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
             {activeNav.charAt(0).toUpperCase() + activeNav.slice(1)}
           </h1>
 
           <div className="flex items-center gap-3">
             {/* Search */}
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm"
-              style={{ background: '#252530', border: '1px solid #333340' }}>
+              style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)' }}>
               <svg className="w-4 h-4 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
