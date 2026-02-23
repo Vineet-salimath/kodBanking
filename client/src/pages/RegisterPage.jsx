@@ -162,8 +162,8 @@ export default function RegisterPage() {
               <button type="submit" disabled={loading} className="btn-primary"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 0' }}>
                 {loading
-                  ? <><span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', animation: 'spin 0.7s linear infinite', display: 'inline-block' }} /> Creating accountâ€¦</>
-                  : 'Create Account â†’'}
+                  ? <><span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', animation: 'spin 0.7s linear infinite', display: 'inline-block' }} /> Creating account…</>
+                  : 'Create Account →'}
               </button>
             </motion.div>
 
